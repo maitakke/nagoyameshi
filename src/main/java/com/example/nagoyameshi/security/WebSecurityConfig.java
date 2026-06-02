@@ -18,13 +18,16 @@ public class WebSecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/", "/signup/**").permitAll()
+				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated())
+		
 			.formLogin((form) -> form
 				.loginPage("/login") // ログインページのURL
 				.loginProcessingUrl("/login") // ログインフォームの送信先URL
 				.defaultSuccessUrl("/?loggedIn") // ログイン成功時のリダイレクト先URL
 				.failureUrl("/login?error") // ログイン失敗時のリダイレクト先URL
 				.permitAll())
+			
 			.logout((logout) -> logout
 				.logoutSuccessUrl("/?loggedOut") // ログアウト時のリダイレクト先URL
 				.permitAll());
