@@ -1,6 +1,7 @@
 package com.example.nagoyameshi.form;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -43,5 +44,7 @@ public class RestaurantRegisterForm {
 	@NotNull(message = "座席数を入力してください。")
 	@Min(value = 0, message = "座席数は0席以上に設定してください。")
 	public Integer seatingCapacity;
+	
+	private List<Integer> categoryIds;
 
 }

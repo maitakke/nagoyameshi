@@ -8,5 +8,4 @@ import lombok.Data;
 public class CategoryRegisterForm {
 	@NotBlank(message = "カテゴリー名を入力してください。")
 	private String name;
-
 }
