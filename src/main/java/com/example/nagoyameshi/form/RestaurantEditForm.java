@@ -47,6 +47,8 @@ public class RestaurantEditForm {
 	@Min(value = 0, message = "座席数は0席以上に設定してください。")
 	public Integer seatingCapacity;
 	
+	private List<Integer> regularHolidayIds;
+	
 	private List<Integer> categoryIds;
 
 }

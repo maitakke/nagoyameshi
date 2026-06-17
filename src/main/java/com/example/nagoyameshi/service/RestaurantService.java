@@ -27,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class RestaurantService {
 	private final RestaurantRepository restaurantRepository;
 	private final CategoryRestaurantService categoryRestaurantService;
+    private final RegularHolidayRestaurantService regularHolidayRestaurantService;
 
 	
    // すべての店舗をページングされた状態で取得する
@@ -59,6 +60,7 @@ public class RestaurantService {
 	       Restaurant restaurant = new Restaurant();
 	       MultipartFile imageFile = restaurantRegisterForm.getImageFile();
 	        List<Integer> categoryIds = restaurantRegisterForm.getCategoryIds();
+	        List<Integer> regularHolidayIds = restaurantRegisterForm.getRegularHolidayIds();
 
 
 	       if (!imageFile.isEmpty()) {
@@ -83,13 +85,18 @@ public class RestaurantService {
 	       
 	        if (categoryIds != null) {
 	            categoryRestaurantService.createCategoriesRestaurants(categoryIds, restaurant);
-	        } 
+	        }
+	        
+	        if (regularHolidayIds != null) {
+	            regularHolidayRestaurantService.createRegularHolidaysRestaurants(regularHolidayIds, restaurant);
+	        }
 	   }
 
 	   @Transactional
 	   public void updateRestaurant(RestaurantEditForm restaurantEditForm, Restaurant restaurant) {
 	       MultipartFile imageFile = restaurantEditForm.getImageFile();
 	        List<Integer> categoryIds = restaurantEditForm.getCategoryIds();
+	        List<Integer> regularHolidayIds = restaurantEditForm.getRegularHolidayIds();
 
 
 	       if (!imageFile.isEmpty()) {
@@ -113,6 +120,7 @@ public class RestaurantService {
 	       restaurantRepository.save(restaurant);
 	       
 	        categoryRestaurantService.syncCategoriesRestaurants(categoryIds, restaurant);
+	        regularHolidayRestaurantService.syncRegularHolidaysRestaurants(regularHolidayIds, restaurant);
 
 	   }
 
