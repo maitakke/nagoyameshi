@@ -1,23 +1,20 @@
 package com.example.nagoyameshi.entity;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import lombok.Data;
 
 @Entity
-@Table(name = "users")
 @Data
-public class User {
+@Table(name = "companies")
+public class Company {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -26,43 +23,31 @@ public class User {
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "furigana")
-	private String furigana;
-
 	@Column(name = "postal_code")
 	private String postalCode;
-
+	
 	@Column(name = "address")
 	private String address;
+	
+	@Column(name = "representative")
+	private String representative;
+	
+	@Column(name = "establishment_date")
+	private String establishmentDate;
+	
+	@Column(name = "capital")
+	private String capital;
 
-	@Column(name = "phone_number")
-	private String phoneNumber;
+	@Column(name = "business")
+	private String business;
+
+	@Column(name = "number_of_employees")
+	private String numberOfEmployees;
 	
-	@Column(name = "birthday")
-	private LocalDate birthday;
-	
-	@Column(name = "occupation")
-	private String occupation;	
-	
-	@Column(name = "email")
-	private String email;
-	
-    @Column(name = "password")
-    private String password;
-	
-	@ManyToOne
-	@JoinColumn(name = "role_id")
-	private Role role;
-	
-    @Column(name = "enabled")
-    private Boolean enabled;
-	
-    @Column(name = "stripeCustomerId")
-    private String stripe_customer_id;
-    
     @Column(name = "created_at", insertable = false, updatable = false)
     private Timestamp createdAt;
 
     @Column(name = "updated_at", insertable = false, updatable = false)
     private Timestamp updatedAt;
+
 }
