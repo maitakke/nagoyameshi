@@ -10,5 +10,5 @@ import com.example.nagoyameshi.entity.Category;
 public interface CategoryRepository extends JpaRepository<Category, Integer>{
 	public Page<Category> findByNameLike(String keyword, Pageable pageable);
 	public Category findFirstByOrderByIdDesc();
-
+	public Category findFirstByName(String name);
 }
