@@ -1,14 +1,56 @@
 package com.example.nagoyameshi.controller;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.nagoyameshi.entity.Category;
+import com.example.nagoyameshi.entity.Restaurant;
+import com.example.nagoyameshi.service.CategoryService;
+import com.example.nagoyameshi.service.RestaurantService;
+
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+	private final RestaurantService restaurantService;
+	private final CategoryService categoryService;
 
 	@GetMapping("/")
     public String index(Model model) {
+		// 1. 新着店舗、任意店舗の6件を取得
+        // List<Restaurant> もしくは Page<Restaurant> を取得する処理
+        Page<Restaurant> highlyRatedRestaurants = restaurantService.findAllRestaurants(PageRequest.of(0, 6));
+        Page<Restaurant> newRestaurants = restaurantService.findAllRestaurantsByOrderByCreatedAtDesc(PageRequest.of(0, 6));
+   
+        // 2. 各特定カテゴリ（和食、うどん等）の取得
+        Category washoku = categoryService.findFirstCategoryByName("和食");
+        Category udon = categoryService.findFirstCategoryByName("うどん");
+        Category don = categoryService.findFirstCategoryByName("丼物");
+        Category ramen = categoryService.findFirstCategoryByName("ラーメン");
+        Category oden = categoryService.findFirstCategoryByName("おでん");
+        Category fried = categoryService.findFirstCategoryByName("揚げ物");
+        
+        // 3. 全カテゴリリストの取得
+        List<Category> categories = categoryService.findAllCategories();
+        
+        // 4. model.addAttribute() でそれぞれをビューに渡す
+        model.addAttribute("highlyRatedRestaurants", highlyRatedRestaurants);
+        model.addAttribute("newRestaurants", newRestaurants);
+        model.addAttribute("washoku", washoku);
+        model.addAttribute("udon", udon);
+        model.addAttribute("don", don);
+        model.addAttribute("ramen", ramen);
+        model.addAttribute("oden", oden);
+        model.addAttribute("fried", fried);
+        
+        model.addAttribute("categories", categories);
+		
 		return "index";
 }
 
